@@ -15,7 +15,9 @@ app.get('/post-codes', (req, res) => {
 // 8785  6000,6107,6155
 app.get('/api/search/:postcode', (req, res) => {
   const postcode = req.params.postcode;
-  console.log({ postcode });
+
+  const postcodeList = postcode.split(',');
+  // console.log({ postcode, postcodeList });
 
   fs.readFile(__dirname + '/data/' + 'data.json', 'utf8', (err, data) => {
     if (err) {
@@ -23,11 +25,10 @@ app.get('/api/search/:postcode', (req, res) => {
       return;
     }
 
-    // TODO - parse through an array of data
     const postcodes = JSON.parse(data);
     // @ts-ignore
     const result = postcodes.filter((item) => {
-      if (String(item?.postcode) === postcode) {
+      if (postcodeList.includes(item?.postcode)) {
         return item;
       }
     });
