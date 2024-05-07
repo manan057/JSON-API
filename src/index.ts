@@ -33,7 +33,17 @@ app.get('/api/search/:postcode', (req, res) => {
       }
     });
 
-    res.send(result);
+    // @ts-ignore
+    const finalResult = result.map((item) => {
+      return {
+        id: item?.id,
+        state: item?.state,
+        postcode: item?.postcode,
+        locatlity: item.locality,
+      };
+    });
+
+    res.send(finalResult);
   });
 });
 
