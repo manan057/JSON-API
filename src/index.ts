@@ -43,12 +43,14 @@ app.get('/api/search/:postcode', (req, res) => {
       };
     });
 
-    res.send(finalResult);
+    if (finalResult.length >= 1) {
+      res.send(finalResult);
+    } else {
+      res.send('No results found');
+    }
   });
 });
 
 const server = app.listen(PORT, () => {
-  const host = (server.address() as AddressInfo).address;
-  const port = (server.address() as AddressInfo).port;
   console.log(`Running on port ${PORT}`);
 });
